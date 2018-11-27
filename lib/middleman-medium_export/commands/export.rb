@@ -1,6 +1,7 @@
 require 'middleman-core/cli'
-require 'articles_filter'
-require 'publisher'
+require 'middleman-medium_export/articles_filter'
+require 'middleman-medium_export/content_builder'
+require 'middleman-medium_export/publisher'
 
 module Middleman
 
@@ -39,10 +40,18 @@ module Middleman
           new(articles: articles, shell: shell).
           public_send(options.mode)
 
-        MediumExport::Publisher.new(articles: filtered_articles, shell: shell).call
+        content = MediumExport::ContentBuilder.new(
+          articles: filtered_articles, template: export_extension.template).call
+
+        MediumExport::Publisher.new(
+          api_client: export_extension.api_client, content: content, shell: shell).call
       end
 
       private
+
+      def export_extension
+        @export_extension ||= app.extensions[:medium_export]
+      end
 
       def app
         @app ||= ::Middleman::Application.new
