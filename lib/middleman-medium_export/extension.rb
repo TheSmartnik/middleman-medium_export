@@ -13,7 +13,7 @@ class MediumExport < ::Middleman::Extension
   TEMPLATES_POSSITIONS = %i[bottom top].freeze
   PUBLISH_STATUSES = %i[public draft unlisted].freeze
 
-  option :api_token, nil, 'Middleman API Token'
+  option :api_token, nil, 'Medium API Token'
   option :template_path, nil, 'HTML template to append to the end of each article'
   option :template_position, :bottom
   option :publish_status, :draft
@@ -41,7 +41,7 @@ class MediumExport < ::Middleman::Extension
   private
 
   def check_api_token!
-    return if options.api_token
+    return unless options.api_token.to_s.empty?
 
     error_msg = "Please, provide an api_token option. To obtain api_token refer to\n" \
       "https://help.medium.com/hc/en-us/articles/213480228-Get-integration-token\n\n"

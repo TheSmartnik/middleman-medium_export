@@ -1,4 +1,5 @@
 require 'middleman-core/cli'
+require 'middleman-blog/uri_templates'
 require 'middleman-medium_export/articles_filter'
 require 'middleman-medium_export/content_builder'
 require 'middleman-medium_export/publisher'
