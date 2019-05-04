@@ -5,3 +5,5 @@
 /pkg
 
 .DS_Store
+
+tmp/
