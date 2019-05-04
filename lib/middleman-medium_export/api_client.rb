@@ -31,6 +31,16 @@ class MediumExport::ApiClient
     )
   end
 
+  def upload_image(image:)
+    response = self.class.post(
+      "https://api.medium.com/v1/images",
+      headers: auth,
+      body: {
+        "image": image
+      }
+    )
+  end
+
   def me
     self.class.get('/me', headers: auth)
   end

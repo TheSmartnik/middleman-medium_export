@@ -19,6 +19,12 @@ class MediumExport::Publisher
   private
 
   def publish(article)
-    api_client.publish(content: article.html, tags: article.tags, title: article.title)
+    updated_html = article.local_images.inject(article.html) do |html, image|
+      response = api_client.upload_image(image: File.open(image.location))
+      url = response['data']['url'] # it may contain errors  {"errors"=>[{"message"=>"Token was invalid.", "code"=>6003}]}
+      html.gsub(image.src, url)
+    end
+
+    api_client.publish(content: updated_html, tags: article.tags, title: article.title)
   end
 end

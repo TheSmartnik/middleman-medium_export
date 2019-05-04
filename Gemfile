@@ -16,5 +16,5 @@ group :test do
   gem 'cucumber'
   gem 'aruba'
   gem 'rspec'
-  gem "kramdown"
+  gem 'kramdown'
 end

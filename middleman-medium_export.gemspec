@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   # The version of middleman-core your extension depends on
   s.add_runtime_dependency("middleman-core", [">= 4.2.1"])
   s.add_runtime_dependency("middleman-blog")
+  s.add_runtime_dependency("nokogiri")
   s.add_runtime_dependency("httparty", ["~> 0.16.3"])
 
   # Additional dependencies
