@@ -35,14 +35,15 @@ module Middleman
 
 
       def medium_export
-        articles = blog.data.articles.sort_by { |a| -a.date.to_i } # test for publishable
+        articles = blog.data.articles.sort_by { |a| -a.date.to_i } # TODO: test for publishable
 
         filtered_articles = MediumExport::ArticlesFilter.
           new(articles: articles, shell: shell).
           public_send(options.mode)
 
-        content = MediumExport::ContentBuilder.new(
-          articles: filtered_articles, template: export_extension.template).call
+        content = filtered_articles.map do |article|
+          MediumExport::Content.new(article: article, template: export_extension.template)
+        end
 
         MediumExport::Publisher.new(
           api_client: export_extension.api_client, content: content, shell: shell).call
