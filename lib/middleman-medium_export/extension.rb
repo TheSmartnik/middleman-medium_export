@@ -10,7 +10,7 @@ class MediumExport < ::Middleman::Extension
   InvalidTemplatePosition = Class.new(ArgumentError)
   InvalidPublishStatus = Class.new(ArgumentError)
 
-  TEMPLATES_POSSITIONS = %i[bottom top].freeze
+  TEMPLATES_POSSITIONS = %w[bottom top].freeze
   PUBLISH_STATUSES = %i[public draft unlisted].freeze
 
   option :api_token, nil, 'Medium API Token'
@@ -23,7 +23,6 @@ class MediumExport < ::Middleman::Extension
     super
 
     check_api_token!
-    check_template_path!
     check_template_positions!
     check_publish_statuses!
   end
@@ -48,14 +47,9 @@ class MediumExport < ::Middleman::Extension
     raise ApiTokenMissing, error_msg
   end
 
-  def check_template_path!
-    return if options.template_path.nil? || File.exists?(options.template_path)
-
-    raise Errno::ENOENT, "Can't find template at #{options.template_path}"
-  end
-
   def check_template_positions!
-    return if TEMPLATES_POSSITIONS.include?(options.template_position.to_sym)
+    position = options.template_position.to_s
+    return if position.empty? || TEMPLATES_POSSITIONS.include?(position)
 
     error_msg = "Invalid template_position: #{options.template_position}.\n" \
       "Possible template positions are: #{TEMPLATES_POSSITIONS.join(", ")}\n\n"

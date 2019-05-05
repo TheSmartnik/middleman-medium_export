@@ -12,7 +12,7 @@ class MediumExport::Content
 
   def html
     @content ||= begin
-      template ? article.body : article.body # fix
+      template ? body_with_template : article.body
     end
   end
 
@@ -39,7 +39,20 @@ class MediumExport::Content
 
   private
 
+  def body_with_template
+    template_html = template_context.render(nil, template.path, { locals: {}})
+    template.position == :top ? "#{template_html}#{article.body}" : "#{article.body}#{template_html}"
+  end
+
   def source_dir
-    article.blog_data.controller.app.source_dir
+    @source_dir ||= app.source_dir
+  end
+
+  def template_context
+    @template_context ||= app.generic_template_context
+  end
+
+  def app
+    @app ||= article.blog_data.controller.app
   end
 end

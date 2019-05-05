@@ -4,6 +4,6 @@ class MediumExport::Template
 
   def initialize(template_path:, template_position:)
     @path = template_path
-    @position = template_position
+    @position = template_position.to_sym
   end
 end
