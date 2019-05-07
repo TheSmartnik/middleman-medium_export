@@ -29,7 +29,7 @@ class MediumExport::Content
   end
 
   def local_images
-    @images ||= Nokogiri.parse(html).css('img').map do |img|
+    @images ||= Nokogiri::HTML(html).search('img').map do |img|
       src = img.attributes['src'].value
       next if src.start_with?('http')
 
