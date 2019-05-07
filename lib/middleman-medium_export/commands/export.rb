@@ -35,7 +35,7 @@ module Middleman
 
 
       def medium_export
-        articles = blog.data.articles.sort_by { |a| -a.date.to_i } # TODO: test for publishable
+        articles = blog.data.articles.sort_by { |a| -a.date.to_i }
 
         filtered_articles = MediumExport::ArticlesFilter.
           new(articles: articles, shell: shell).
