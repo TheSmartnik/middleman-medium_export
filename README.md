@@ -29,7 +29,10 @@ Extension provides several options
 `api_token` - required, self issued api token to post your articles
 
 `template_path` - optinal, path to partial to add to your article
-`template_position` - optional. Position of your template. Possible values are: `:top` and `:bottom`. Default is `:bottom`
+
+`template_position` - optional. Position of your template. Possible values 
+are: `:top` and `:bottom`. Default is `:bottom`
+
 `publish_status` - optional. Status of your articles, when they are exported. Possible values are: `public`, `draft`, or `unlisted`. Default is `:draft`
 
 ## Export
